@@ -16,7 +16,9 @@ const SignUp = () => {
     e.preventDefault();
     const errors = validateForm(values);
     setError(errors);
-    setUrl('https://sendit-logistic-2021.herokuapp.com/api/v1/users');
+    if (Object.keys(errors).length === 0) {
+      setUrl('https://sendit-logistic-2021.herokuapp.com/api/v1/users');
+    }
   };
 
   const data = useFetchPost(url, values);
@@ -30,7 +32,6 @@ const SignUp = () => {
       setError(data.fetchError);
     }
   }, [data]);
-  console.table(error);
 
   return (
     <div className="flex items-center bg-gray-100 justify-center w-full h-screen">

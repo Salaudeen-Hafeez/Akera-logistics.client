@@ -15,7 +15,6 @@ const PackageDetail = () => {
   const [packages, setPackages] = useState(
     JSON.parse(localStorage.getItem('selectedPackage'))
   );
-  console.log(packages);
 
   const [geoCode1Url, setGeoCode1Url] = useState(
     `https://maps.googleapis.com/maps/api/geocode/json?address=${packages._location}&key=AIzaSyD9LtzkCH903RTWTMDehYnSmOVitAhBtwA`
@@ -37,7 +36,6 @@ const PackageDetail = () => {
   const adminuri = `https://sendit-logistic-2021.herokuapp.com/api/v1/users/${_email}/${users_id}/${user.data.admin_token}/packages/${packages.parcel_id}`;
   const geoCode1 = useFetchGet(geoCode1Url);
   const geoCode2 = useFetchGet(geoCode2Url);
-  console.log(geoCode2);
 
   if (geoCode1.data !== null && geoCode2.data !== null) {
     if (geoCode1.data.status === 'OK' && geoCode2.data.status === 'OK') {
@@ -56,7 +54,6 @@ const PackageDetail = () => {
 
   useEffect(() => {
     if (Object.keys(data).length !== 0) {
-      console.log(data);
       localStorage.setItem('selectedPackage', JSON.stringify(data));
       setPackages(data);
       setUrl('');

@@ -20,7 +20,7 @@ function App() {
   };
   return (
     <Router>
-      <div>
+      <div className="font-serif">
         <Switch>
           <Route exact path="/">
             <Navbar />

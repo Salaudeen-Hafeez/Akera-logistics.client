@@ -6,11 +6,11 @@ const useFetchPost = (url, values) => {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    const abortConst = new AbortController();
+    // const abortConst = new AbortController();
     if (url !== '') {
       setIsLoading(true);
       fetch(url, {
-        signal: abortConst.signal,
+        // signal: abortConst.signal,
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(values),
@@ -37,7 +37,7 @@ const useFetchPost = (url, values) => {
     }
 
     return () => {
-      abortConst.abort();
+      // abortConst.abort();
     };
   }, [url, values]);
   return { data, fetchError, isLoading };

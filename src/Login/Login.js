@@ -20,10 +20,9 @@ const Login = () => {
   useEffect(() => {
     if (data.fetchError !== null) {
       setError(data.fetchError);
+      setUrl('');
     }
   }, [data]);
-
-  console.log(error);
 
   const handleSubmit = (e) => {
     e.preventDefault();

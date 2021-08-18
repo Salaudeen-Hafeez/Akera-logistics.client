@@ -5,7 +5,7 @@ import Logo from '../Universal/Logo';
 import CheckboxComponent from './Chechbox';
 
 const Package = () => {
-  const { handleChange, handleSubmit, values, error } =
+  const { handleChange, handleSubmit, values, error, isLoading, fetchError } =
     usePackageForm(validateForm);
 
   const usePackageFormData = { handleChange, values, error };
@@ -31,6 +31,8 @@ const Package = () => {
               Kindly fill the form below to add new package order
             </p>
           </div>
+          {isLoading && <h2>Loading....</h2>}
+          {fetchError !== null && <h2>Kindly login to make order</h2>}
           <div>
             <PackageComponent
               data={usePackageFormData}

@@ -8,6 +8,7 @@ import { useHistory } from 'react-router-dom';
 const UserPage = () => {
   const userData = JSON.parse(localStorage.getItem('userData'));
   const [url, setUrl] = useState('');
+  const [token, setToken] = useState(true);
   const [updatePackage, setUpdatePackage] = useState(false);
   const [packageData, setPackageData] = useState({});
   const usehistory = new useHistory();
@@ -28,6 +29,15 @@ const UserPage = () => {
     const selectedPackage = data.filter((data) => data.parcel_id === packageId);
     localStorage.setItem('selectedPackage', JSON.stringify(selectedPackage[0]));
     usehistory.push('/packagepage');
+  };
+
+  const handleAddPackage = () => {
+    if (!('auth_token' in userData.data)) {
+      setToken(false);
+    } else {
+      setToken(true);
+      usehistory.push('/addpackage');
+    }
   };
   return (
     <div className="text-gray-900 bg-opacity-0">
@@ -73,9 +83,18 @@ const UserPage = () => {
             {isLoading && (
               <h2 className="text-gray-900 font-bold mt-3">Loading...</h2>
             )}
-            {fetchError !== null && (
+            {fetchError !== null && token && (
               <h2 className="mt-3 font-bold text-red-500">
                 {fetchError.packages} {fetchError.auth_token}
+              </h2>
+            )}
+            {!token && (
+              <h2 className="mt-3 font-bold text-red-500">
+                Kindly{' '}
+                <Link to={'/login'} className="text-blue-500 underline">
+                  Login
+                </Link>{' '}
+                to make orders
               </h2>
             )}
             {Object.keys(packageData).length !== 0 && (
@@ -93,13 +112,13 @@ const UserPage = () => {
               </div>
             )}
           </div>
-          <Link
-            to={'/addpackage'}
+          <button
+            onClick={handleAddPackage}
             className="my-4 py-1 bg-btnbg w-11/12 
             rounded-lg text-center"
           >
             Add new package
-          </Link>
+          </button>
         </div>
       )}
     </div>

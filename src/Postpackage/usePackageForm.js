@@ -46,14 +46,13 @@ const usePackageForm = (validate) => {
     e.preventDefault();
     const errors = validate(values);
     setError(errors);
-    if (Object.keys(error).length === 0) {
+    if (Object.keys(errors).length === 0) {
       setUrl(uri);
     } else {
       setUrl('');
     }
   };
   const { data, fetchError, isLoading } = useFetchPost(url, values);
-  console.log(data);
   if (data !== null) {
     localStorage.removeItem('selectedPackage');
     localStorage.setItem('selectedPackage', JSON.stringify(data));

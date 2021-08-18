@@ -1,7 +1,7 @@
 import Maincomponent from './Miancomponent';
 const Main = ({ message }) => {
   return (
-    <main className="font-serif">
+    <main>
       <ul>
         <Maincomponent
           itemImage={'images/packaging.jpg'}
