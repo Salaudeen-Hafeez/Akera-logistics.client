@@ -2,24 +2,30 @@ import Maincomponent from './Miancomponent';
 const Main = ({ message }) => {
   return (
     <main>
-      <ul>
-        <Maincomponent
-          itemImage={'images/packaging.jpg'}
-          message={message.packaging}
-        />
-        <Maincomponent
-          itemImage={'images/sealing1.jpg'}
-          message={message.seal}
-        />
-        <Maincomponent
-          itemImage={'images/transport.jpg'}
-          message={message.transport}
-        />
-        <Maincomponent
-          itemImage={'images/delivered1.jpg'}
-          message={message.deliver}
-        />
-      </ul>
+      <div className="md:flex md:justify-center md:items-center md:w-full bg-gray-200">
+        <div className="md:grid md:grid-cols-2 md:grid-flow-rows md:gap-3 md:w-4/5 md:col-start-2 list-none">
+          <Maincomponent
+            itemImage={'images/packaging.jpg'}
+            className="shadow-lg"
+            message={message.packaging}
+          />
+          <Maincomponent
+            itemImage={'images/sealing1.jpg'}
+            className="shadow-lg"
+            message={message.seal}
+          />
+          <Maincomponent
+            itemImage={'images/transport.jpg'}
+            className="shadow-lg"
+            message={message.transport}
+          />
+          <Maincomponent
+            itemImage={'images/delivered1.jpg'}
+            className="shadow-lg"
+            message={message.deliver}
+          />
+        </div>
+      </div>
     </main>
   );
 };

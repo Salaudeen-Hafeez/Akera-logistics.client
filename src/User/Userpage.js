@@ -40,7 +40,7 @@ const UserPage = () => {
     }
   };
   return (
-    <div className="text-gray-900 bg-opacity-0">
+    <div className="text-gray-900">
       {userData && (
         <div className="flex items-center flex-col ">
           <div
@@ -90,25 +90,27 @@ const UserPage = () => {
             )}
             {!token && (
               <h2 className="mt-3 font-bold text-red-500">
-                Kindly{' '}
+                Kindly
                 <Link to={'/login'} className="text-blue-500 underline">
                   Login
-                </Link>{' '}
+                </Link>
                 to make orders
               </h2>
             )}
             {Object.keys(packageData).length !== 0 && (
-              <div>
+              <div className="md:flex md:flex-col md:justify-center md:items-center md:w-full bg-mainbg">
                 <h2 className="text-center text-gray-800 text-lg font-bold pt-4">
                   My packages
                 </h2>
-                {packageData.map((data) => (
-                  <UserPackages
-                    key={data.parcel_id}
-                    packages={data}
-                    handlePackage={handlePackage}
-                  />
-                ))}
+                <div className="md:grid md:grid-cols-2 md:grid-flow-rows md:gap-3 md:w-4/5 md:col-start-2 list-none">
+                  {packageData.map((data) => (
+                    <UserPackages
+                      key={data.parcel_id}
+                      packages={data}
+                      handlePackage={handlePackage}
+                    />
+                  ))}
+                </div>
               </div>
             )}
           </div>

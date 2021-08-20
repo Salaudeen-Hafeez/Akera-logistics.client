@@ -86,8 +86,8 @@ const PackageDetail = () => {
   return (
     <div className="">
       <Navbar />
-      <div className="flex justify-center items-center w-full bg-gray-200">
-        <div>
+      <div className="flex justify-center items-center w-full md:items-center bg-gray-200">
+        <div className="md:w-3/5">
           <h2 className="text-center font-bold py-3">Package details</h2>
           <DisplayPackage />
           <Button handleOkayButton={handleOkayButton} />

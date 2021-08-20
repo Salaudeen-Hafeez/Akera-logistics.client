@@ -11,6 +11,8 @@ module.exports = {
         packagebg: '#C7D2FE',
         userbg: '#EDE9FE',
         btnbg: '#C4B5FD',
+        mainbg: '#FDFEFF',
+        comp: 'E2E4E7',
       },
     },
   },

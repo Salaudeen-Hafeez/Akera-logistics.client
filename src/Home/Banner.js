@@ -1,8 +1,8 @@
 const Banner = () => {
   return (
     <header id="showcase" className="">
-      <div className="bg-banner w-full h-80 bg-no-repeat flex flex-col justify-center">
-        <div className="font-bold bg-white bg-opacity-25 backdrop-filter backdrop-blur-sm">
+      <div className="bg-banner w-full h-80 flex flex-col justify-center">
+        <div className="font-bold bg-mainbg bg-opacity-25 backdrop-filter ">
           <h1 className="text-center mb-4 px-0.5 text-xl font-bold">
             We deliver packages across the country
           </h1>

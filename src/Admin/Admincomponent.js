@@ -15,13 +15,13 @@ const AdminComponent = ({ data, adminEvents }) => {
   return (
     <div>
       <div
-        className="flex flex-col bg-userbg bg-transparent w-full 
+        className="flex flex-col bg-userbg w-full 
           items-center py-6 shadow-lg"
       >
         <img
           src="/images/Lagos4.jpg"
           alt="profilepicture"
-          className="w-2/5 h-24 rounded-lg mb-4"
+          className="w-2/5 h-24 rounded-lg mb-4 md:w-1/5"
         />
         <div className="text-center">
           <h1 className="text-lg font-bold">{data._name}</h1>
@@ -32,8 +32,8 @@ const AdminComponent = ({ data, adminEvents }) => {
           </ul>
         </div>
       </div>
-      <div className="">
-        <div className="flex flex-col items-start text-blue-500 mt-2">
+      <div className="md:flex md:justify-center md:flex-col md:items-center md:w-full bg-gray-200">
+        <div className="text-blue-500 my-2">
           <button className="ml-2" onClick={handleUser}>
             Users
           </button>
@@ -42,22 +42,21 @@ const AdminComponent = ({ data, adminEvents }) => {
           </button>
         </div>
         {showPackage && (
-          <div className="mt-2 ml-2 flex flex-col">
+          <div className="mt-2 ml-2 flex flex-col md:flex-row md:w-4/5 md:justify-between">
             <button
-              className="py-3 mb-2 bg-btnbg mx-2 rounded-lg hover:bg-purple-500 hover:text-white"
+              className="py-3 mb-2 bg-btnbg mx-2 rounded-lg hover:bg-purple-500 hover:text-white md:w-full"
               onClick={handleNewPackage}
             >
               New packages
             </button>
-            <div className=""></div>
             <button
-              className="py-3 mb-2 bg-btnbg mx-2 rounded-lg hover:bg-purple-500 hover:text-white"
+              className="py-3 mb-2 bg-btnbg mx-2 rounded-lg hover:bg-purple-500 hover:text-white md:w-full"
               onClick={handlePackageInTransit}
             >
               Packages in transit
             </button>
             <button
-              className="py-3 mb-2 bg-btnbg mx-2 rounded-lg hover:bg-purple-500 hover:text-white"
+              className="py-3 mb-2 bg-btnbg mx-2 rounded-lg hover:bg-purple-500 hover:text-white md:w-full"
               onClick={handleDeliveredPackage}
             >
               Delivered packages
