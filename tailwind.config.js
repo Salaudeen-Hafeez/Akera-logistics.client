@@ -5,7 +5,7 @@ module.exports = {
   theme: {
     extend: {
       backgroundImage: {
-        banner: "url('./images/bg-image.jpg')",
+        banner: "url('./images/logistics-bg.jpg')",
       },
       backgroundColor: {
         packagebg: '#C7D2FE',

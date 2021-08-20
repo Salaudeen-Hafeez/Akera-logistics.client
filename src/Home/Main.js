@@ -1,9 +1,10 @@
+import About from './About';
 import Maincomponent from './Miancomponent';
 const Main = ({ message }) => {
   return (
     <main>
-      <div className="md:flex md:justify-center md:items-center md:w-full bg-gray-200">
-        <div className="md:grid md:grid-cols-2 md:grid-flow-rows md:gap-3 md:w-4/5 md:col-start-2 list-none">
+      <div className="md:flex md:justify-center md:items-center md:w-full bg-gray-200 ">
+        <div className="md:grid md:grid-cols-2 md:grid-flow-rows md:gap-3 md:w-4/5 md:col-start-2 list-none md:mt-4">
           <Maincomponent
             itemImage={'images/packaging.jpg'}
             className="shadow-lg"
@@ -24,6 +25,7 @@ const Main = ({ message }) => {
             className="shadow-lg"
             message={message.deliver}
           />
+          <About />
         </div>
       </div>
     </main>
