@@ -17,7 +17,13 @@ const SignUp = () => {
     const errors = validateForm(values);
     setError(errors);
     if (Object.keys(errors).length === 0) {
-      setUrl('https://sendit-logistic-2021.herokuapp.com/api/v1/users');
+      if (values.email.includes('@sendit.com')) {
+        setUrl(
+          'https://sendit-logistic-2021.herokuapp.com/api/v1/users/admins'
+        );
+      } else {
+        setUrl('https://sendit-logistic-2021.herokuapp.com/api/v1/users');
+      }
     }
   };
 

@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 const About = () => {
   return (
     <div className="text-center py-4 md:px-40 w-full bg-blue-200 md:col-span-2">
@@ -11,7 +13,11 @@ const About = () => {
         cumque cupiditate ullam, ratione possimus et placeat earum?
       </p>
       <p>
-        click <a href="./signup.html">here</a> to register
+        click{' '}
+        <Link to={'/signup'} className="underline">
+          here
+        </Link>{' '}
+        to register
       </p>
     </div>
   );
