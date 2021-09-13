@@ -18,6 +18,7 @@ const SignUp = () => {
     setError(errors);
     if (Object.keys(errors).length === 0) {
       if (values.email.includes('@sendit.com')) {
+        console.log('Inside Admin url');
         setUrl(
           'https://sendit-logistic-2021.herokuapp.com/api/v1/users/admins'
         );
@@ -28,6 +29,7 @@ const SignUp = () => {
   };
 
   const data = useFetchPost(url, values);
+  console.log(data);
   if (data.data !== null) {
     localStorage.clear();
     localStorage.setItem('userData', JSON.stringify(data));

@@ -1,27 +1,30 @@
 import About from './About';
 import Maincomponent from './Miancomponent';
+import { useRouteMatch, Link } from 'react-router';
 const Main = ({ message }) => {
+  const { path, url } = useRouteMatch();
+  console.log(path);
   return (
     <main>
       <div className="md:flex md:justify-center md:items-center md:w-full bg-gray-200 ">
         <div className="md:grid md:grid-cols-2 md:grid-flow-rows md:gap-3 md:w-4/5 md:col-start-2 list-none md:mt-4">
           <Maincomponent
-            itemImage={'images/packaging.jpg'}
+            itemImage={'images/packaging.jpeg'}
             className="shadow-lg"
             message={message.packaging}
           />
           <Maincomponent
-            itemImage={'images/sealing1.jpg'}
+            itemImage={'images/sealing1.jpeg'}
             className="shadow-lg"
             message={message.seal}
           />
           <Maincomponent
-            itemImage={'images/transport.jpg'}
+            itemImage={'images/transport.jpeg'}
             className="shadow-lg"
             message={message.transport}
           />
           <Maincomponent
-            itemImage={'images/delivered1.jpg'}
+            itemImage={'images/delivered1.jpeg'}
             className="shadow-lg"
             message={message.deliver}
           />

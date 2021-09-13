@@ -3,7 +3,13 @@ import Navbar from './Universal/Navbar';
 import Banner from './Home/Banner';
 import Main from './Home/Main';
 import Login from './Login/Login';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  useParams,
+  useRouteMatch,
+} from 'react-router-dom';
 import SignUp from './Register/Signup';
 import Package from './Postpackage/Package';
 import UserPage from './User/Userpage';
@@ -18,18 +24,21 @@ function App() {
     transport: 'We transport the package',
     deliver: 'We deliver the package',
   };
+  //const { path, url } = useRouteMatch();
+  //let { id } = useParams();
+  //console.log(id);
   return (
     <Router>
       <div className="font-serif">
         <Switch>
+          <Route exact path="/login">
+            <Login />
+          </Route>
+
           <Route exact path="/">
             <Navbar />
             <Banner />
             <Main message={message} />
-          </Route>
-
-          <Route exact path="/login">
-            <Login />
           </Route>
 
           <Route exact path="/signup">

@@ -1,5 +1,8 @@
-import { Link } from 'react-router-dom';
+import { Link, useRouteMatch } from 'react-router-dom';
 const LoginPage = ({ handleChange, handleSubmit, error, values }) => {
+  const { path, url } = useRouteMatch();
+  console.log(url);
+  console.log(path);
   return (
     <form
       onSubmit={handleSubmit}
@@ -57,7 +60,7 @@ const LoginPage = ({ handleChange, handleSubmit, error, values }) => {
         <p>
           Are you new to sendIT? {''}
           <Link
-            to="/signup"
+            to="signup"
             className="text-blue-400 underline hover:text-green-400"
           >
             Create an account
