@@ -2,13 +2,7 @@ import Navbar from './Universal/Navbar';
 import Banner from './Home/Banner';
 import Main from './Home/Main';
 import Login from './Login/Login';
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-  useParams,
-  useRouteMatch,
-} from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import SignUp from './Register/Signup';
 import Package from './Postpackage/Package';
 import UserPage from './User/Userpage';
