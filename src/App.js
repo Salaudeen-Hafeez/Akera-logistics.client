@@ -1,4 +1,3 @@
-import './App.css';
 import Navbar from './Universal/Navbar';
 import Banner from './Home/Banner';
 import Main from './Home/Main';
