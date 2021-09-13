@@ -2,7 +2,6 @@ import { Link, useRouteMatch } from 'react-router-dom';
 const LoginPage = ({ handleChange, handleSubmit, error, values }) => {
   const { path, url } = useRouteMatch();
   console.log(url);
-  console.log(path);
   return (
     <form
       onSubmit={handleSubmit}
