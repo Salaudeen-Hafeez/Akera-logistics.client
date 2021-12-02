@@ -1,7 +1,11 @@
-import { Link, useRouteMatch } from 'react-router-dom';
-const LoginPage = ({ handleChange, handleSubmit, error, values }) => {
-  const { path, url } = useRouteMatch();
-  console.log(url);
+import { Link } from 'react-router-dom';
+const LoginPage = ({
+  handleChange,
+  handleSubmit,
+  error,
+  values,
+  isLoading,
+}) => {
   return (
     <form
       onSubmit={handleSubmit}
@@ -13,6 +17,7 @@ const LoginPage = ({ handleChange, handleSubmit, error, values }) => {
           Akera Logistics
         </span>
       </a>
+      {isLoading && <h2 className="text-center mt-10">Loading...</h2>}
       <div
         className="flex flex-col items-left justify-center
          bg-gray-800 text-white px-10 text-sm h-4/5 rounded-md"
@@ -21,10 +26,13 @@ const LoginPage = ({ handleChange, handleSubmit, error, values }) => {
           <h2 className="text-lg font-bold">Login to Akera logistics</h2>
         </div>
         <div className="">
+          <small className="text-red-600 font-bold brightness-105">
+            {Object.keys(error).length > 0 && error.errMessage}
+          </small>
           <div className="flex flex-col mb-4">
             <label className="pb-1">Email</label>
             <input
-              type="email"
+              type="text"
               id="email"
               name="email"
               className="bg-gray-600 focus:bg-gray-800 h-6 hover:bg-gray-900"

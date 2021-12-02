@@ -1,8 +1,15 @@
+import { useState, useEffect } from 'react';
 import Navbar from './Universal/Navbar';
 import Banner from './Home/Banner';
+import Logout from './Universal/Logout';
 import Main from './Home/Main';
 import Login from './Login/Login';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Redirect,
+} from 'react-router-dom';
 import SignUp from './Register/Signup';
 import Package from './Postpackage/Package';
 import UserPage from './User/Userpage';
@@ -10,16 +17,32 @@ import PackageDetail from './User/Packagedetail';
 import Admin from './Admin/Admin';
 
 function App() {
-  //const Images = "./Images2.png"
+  const [userloggedIn, setUserLoggedIn] = useState(false);
+  const [adminloggedIn, setAdminLoggedIn] = useState(false);
+  //const [users, setUsers] = useState(null);
+  const users =
+    JSON.parse(localStorage.getItem('userData')) ||
+    JSON.parse(localStorage.getItem('adminData'));
+  useEffect(() => {
+    if (users !== null) {
+      if (users.user) {
+        setUserLoggedIn(true);
+      } else {
+        setAdminLoggedIn(true);
+      }
+    }
+  }, [users]);
+
   const message = {
     packaging: 'We do the packaging',
     seal: 'We seal the package',
     transport: 'We transport the package',
     deliver: 'We deliver the package',
   };
-  //const { path, url } = useRouteMatch();
-  //let { id } = useParams();
-  //console.log(id);
+  const homeNav = ['signup', 'login'];
+  const userNav = ['Profile', 'My Packages', 'Logout'];
+  const adminNav = ['home', 'Users', 'Packages', 'Logout'];
+
   return (
     <Router>
       <div className="font-serif">
@@ -29,9 +52,17 @@ function App() {
           </Route>
 
           <Route exact path="/">
-            <Navbar />
-            <Banner />
-            <Main message={message} />
+            {userloggedIn ? (
+              <Redirect to="/userpage" />
+            ) : adminloggedIn ? (
+              <Redirect to="/adminpage" />
+            ) : (
+              <div>
+                <Navbar linkItems={homeNav} />
+                <Banner />
+                <Main message={message} />
+              </div>
+            )}
           </Route>
 
           <Route exact path="/signup">
@@ -43,7 +74,7 @@ function App() {
           </Route>
 
           <Route exact path="/userpage">
-            <Navbar />
+            <Navbar linkItems={userNav} />
             <UserPage />
           </Route>
 
@@ -52,8 +83,11 @@ function App() {
           </Route>
 
           <Route exact path="/adminpage">
-            <Navbar />
+            <Navbar linkItems={adminNav} />
             <Admin />
+          </Route>
+          <Route exact path="/logout">
+            <Logout />
           </Route>
         </Switch>
       </div>

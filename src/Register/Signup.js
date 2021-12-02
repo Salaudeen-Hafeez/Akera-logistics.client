@@ -4,43 +4,47 @@ import { useHistory } from 'react-router-dom';
 import useSignupForm from './useSignupForm';
 import useFetchPost from '../Fetchhooks/useFetchPost';
 import validateForm from '../Universal/ValidateForm';
+import SignupComponent from './SignupComponent';
 
 const SignUp = () => {
   const [error, setError] = useState({});
   const [url, setUrl] = useState('');
   const usehistory = new useHistory();
-
   const { handleChange, values } = useSignupForm();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const errors = validateForm(values);
+    console.log(errors);
     setError(errors);
     if (Object.keys(errors).length === 0) {
       if (values.email.includes('@sendit.com')) {
-        console.log('Inside Admin url');
-        setUrl(
-          'https://sendit-logistic-2021.herokuapp.com/api/v1/users/admins'
-        );
+        setUrl('https://akera-logistics.herokuapp.com/api/v1/users/admins');
       } else {
-        setUrl('https://sendit-logistic-2021.herokuapp.com/api/v1/users');
+        setUrl('https://akera-logistics.herokuapp.com/api/v1/users');
       }
     }
   };
+  const { data, fetchError, isLoading } = useFetchPost(url, values);
 
-  const data = useFetchPost(url, values);
-  console.log(data);
-  if (data.data !== null) {
+  if (data !== null && Object.keys(error).length === 0) {
     localStorage.clear();
-    localStorage.setItem('userData', JSON.stringify(data));
-    usehistory.push('/userpage');
-  }
-  useEffect(() => {
-    if (data.fetchError !== null) {
-      setError(data.fetchError);
+    if (values.email.includes('@sendit')) {
+      localStorage.setItem('adminData', JSON.stringify(data));
+      setTimeout(usehistory.push('/adminpage'), 1200);
+    } else {
+      localStorage.setItem('userData', JSON.stringify(data));
+      setTimeout(usehistory.push('/userpage'), 1200);
     }
-  }, [data]);
+  }
 
+  useEffect(() => {
+    if (Object.keys(fetchError).length !== 0) {
+      setError(fetchError);
+    }
+  }, [data, fetchError]);
+
+  const signupData = { handleChange, values, error };
   return (
     <div className="flex items-center bg-gray-100 justify-center w-full h-screen">
       <form
@@ -57,6 +61,7 @@ const SignUp = () => {
           className="flex flex-col items-left justify-center
          bg-gray-800 text-white px-10 text-sm h-4/5 rounded-md"
         >
+          {isLoading && <h2 className="text-center mt-10">Loading...</h2>}
           <div className="text-center">
             <h2 className="mb-6 text-lg font-bold">Sign-up Now</h2>
             <p className="mb-4">
@@ -64,74 +69,32 @@ const SignUp = () => {
               our services
             </p>
           </div>
+          {Object.keys(fetchError).length !== 0 && (
+            <h2 className="mt-3 font-bold text-red-500">
+              {fetchError.errMessage}
+            </h2>
+          )}
           <div className="">
-            <div className="flex flex-col mb-4">
-              <label className="pb-1">Full Name</label>
-              <input
-                type="text"
-                name="name"
-                className="bg-gray-600 focus:bg-gray-800 h-6 hover:bg-gray-900"
-                value={values.name}
-                onChange={handleChange}
-              />
-              <small className="text-red-600 font-bold brightness-105">
-                {error.name}
-              </small>
-            </div>
-            <div className="flex flex-col mb-4">
-              <label className="pb-1">Username</label>
-              <input
-                type="text"
-                name="username"
-                className="bg-gray-600 focus:bg-gray-800 h-6 hover:bg-gray-900"
-                value={values.username}
-                onChange={handleChange}
-              />
-              <small className="text-red-600 font-bold brightness-105">
-                {error.username}
-              </small>
-            </div>
-            <div className="flex flex-col mb-4">
-              <label className="pb-1">Email</label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                className="bg-gray-600 focus:bg-gray-800 h-6 hover:bg-gray-900"
-                value={values.email}
-                onChange={handleChange}
-              />
-              <small className="text-red-600 font-bold brightness-105">
-                {error.email}
-              </small>
-            </div>
-            <div className="flex flex-col mb-6">
-              <label className="pb-1">Password</label>
-              <input
-                type="password"
-                id="password"
-                name="password"
-                className="bg-gray-600 focus:bg-gray-800 h-6 hover:bg-gray-900"
-                value={values.password}
-                onChange={handleChange}
-              />
-              <small className="text-red-600 font-bold brightness-105">
-                {error.password}
-              </small>
-            </div>
-            <div className="flex flex-col mb-6">
-              <label className="pb-1">Confirm Password</label>
-              <input
-                type="password"
-                name="password2"
-                className="bg-gray-600 focus:bg-gray-800 h-6 hover:bg-gray-900"
-                value={values.password2}
-                onChange={handleChange}
-              />
-              <small className="text-red-600 font-bold brightness-105">
-                {error.password2}
-              </small>
-            </div>
+            <SignupComponent
+              signupData={signupData}
+              formData={['text', 'Full Name', 'name']}
+            />
+            <SignupComponent
+              signupData={signupData}
+              formData={['text', 'Username', 'username']}
+            />
+            <SignupComponent
+              signupData={signupData}
+              formData={['text', 'Email', 'email']}
+            />
+            <SignupComponent
+              signupData={signupData}
+              formData={['password', 'Password', 'password']}
+            />
+            <SignupComponent
+              signupData={signupData}
+              formData={['password', 'Confirm Password', 'password2']}
+            />
           </div>
           <input
             type="submit"
@@ -149,7 +112,6 @@ const SignUp = () => {
             </Link>
           </p>
         </div>
-        <div>{values.name}</div>
       </form>
     </div>
   );

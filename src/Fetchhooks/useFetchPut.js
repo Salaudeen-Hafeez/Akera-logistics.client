@@ -1,16 +1,15 @@
 import { useState, useEffect } from 'react';
 
-const useFetchPost = (url, values) => {
-  const [data, setData] = useState({});
-  const [fetchError, setFetchError] = useState(null);
+const useFetchPut = (url, values) => {
+  const [data, setData] = useState(null);
+  const [fetchError, setFetchError] = useState({});
   const [isLoading, setIsLoading] = useState(false);
-
   useEffect(() => {
-    const abortConst = new AbortController();
-    if (Object.keys(url).length !== 0) {
+    // const abortConst = new AbortController();
+    if (url !== '') {
       setIsLoading(true);
       fetch(url, {
-        signal: abortConst.signal,
+        // signal: abortConst.signal,
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(values),
@@ -19,26 +18,28 @@ const useFetchPost = (url, values) => {
           return resp.json();
         })
         .then((data) => {
-          if (Object.keys(data).length === 0 || data.message) {
-            setData({});
-            setFetchError(data);
-          } else {
-            setFetchError(null);
+          if (!data.username) {
+            setFetchError({});
             setData(data);
+            setIsLoading(false);
+          } else {
+            setData(null);
+            setFetchError(data);
             setIsLoading(false);
           }
         })
         .catch((err) => {
-          setData({});
+          setData(null);
           setFetchError(err);
+          setIsLoading(false);
         });
     }
 
     return () => {
-      abortConst.abort();
+      // abortConst.abort();
     };
   }, [url, values]);
   return { data, fetchError, isLoading };
 };
 
-export default useFetchPost;
+export default useFetchPut;

@@ -4,22 +4,21 @@ import useFetchPost from '../Fetchhooks/useFetchPost';
 
 const usePackageForm = (validate) => {
   const userData = JSON.parse(localStorage.getItem('userData'));
+  const { _username, _email, auth_token } = userData.user;
   const usehistory = new useHistory();
   const [error, setError] = useState({});
   const [url, setUrl] = useState('');
   const [values, setValues] = useState({
-    username: '',
     name: '',
     location: '',
     destination: '',
     sender: '',
     reciever: '',
     frajile: '',
+    username: _username,
   });
+  const uri = `https://akera-logistics.herokuapp.com/api/v1/users/${_username}/${_email}/${auth_token}/packages`;
 
-  const uri = `https://sendit-logistic-2021.herokuapp.com/api/v1/users/${userData.data._username}/${userData.data._email}/${userData.data.auth_token}/packages`;
-
-  // useEffect(() => {}, [data1]);
   const handleChange = (e) => {
     const { name, value } = e.target;
     if (name === 'frajile') {
@@ -41,7 +40,7 @@ const usePackageForm = (validate) => {
       });
     }
   };
-
+  console.log(values);
   const handleSubmit = (e) => {
     e.preventDefault();
     const errors = validate(values);
@@ -52,14 +51,21 @@ const usePackageForm = (validate) => {
       setUrl('');
     }
   };
-  const { data, fetchError, isLoading } = useFetchPost(url, values);
+  const { data, fetchError, isLoading } = useFetchPost(url, values, _username);
   if (data !== null) {
     localStorage.removeItem('selectedPackage');
     localStorage.setItem('selectedPackage', JSON.stringify(data));
-    usehistory.push('/packagepage');
+    usehistory.push('/Userpage');
   }
 
-  return { handleChange, handleSubmit, values, error, isLoading, fetchError };
+  return {
+    handleChange,
+    handleSubmit,
+    isLoading,
+    fetchError,
+    values,
+    error,
+  };
 };
 
 export default usePackageForm;

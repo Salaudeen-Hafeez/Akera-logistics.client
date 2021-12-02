@@ -1,8 +1,7 @@
 import Navlinkcomponent from './Navlinkcomponent';
-const NavLinks = () => {
-  const linkItems = ['home', 'services', 'contact', 'signup', 'login'];
+const NavLinks = ({ linkItems }) => {
   return (
-    <div className="flex flex-col h-72 bg-gray-700 w-auto rounded-br-full justify-between md:rounded-0 md:bg-gray-800 md:h-auto md:inline-flex md:flex-row md:ml-auto">
+    <div className="flex flex-col h-auto bg-gray-700 w-auto text-center justify-between md:rounded-0 md:bg-gray-800 md:h-auto md:inline-flex md:flex-row md:ml-auto">
       {linkItems.map((data) => (
         <Navlinkcomponent key={data} linkItem={data} />
       ))}

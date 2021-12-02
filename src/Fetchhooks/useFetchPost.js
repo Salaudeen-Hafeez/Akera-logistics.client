@@ -2,9 +2,8 @@ import { useState, useEffect } from 'react';
 
 const useFetchPost = (url, values) => {
   const [data, setData] = useState(null);
-  const [fetchError, setFetchError] = useState(null);
+  const [fetchError, setFetchError] = useState({});
   const [isLoading, setIsLoading] = useState(false);
-
   useEffect(() => {
     // const abortConst = new AbortController();
     if (url !== '') {
@@ -19,8 +18,8 @@ const useFetchPost = (url, values) => {
           return resp.json();
         })
         .then((data) => {
-          if ('parcel_id' in data || 'users_id' in data || 'admin_id' in data) {
-            setFetchError(null);
+          if (!data.errMessage) {
+            setFetchError({});
             setData(data);
             setIsLoading(false);
           } else {

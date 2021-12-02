@@ -1,20 +1,25 @@
-const ChangeDestination = ({ handleSubmit, handleChange, user }) => {
+import PlaceAutocomplete from '../Placeautocomplete';
+
+const ChangeDestination = ({ user, data }) => {
+  const { handleSubmit, handleSelectChange } = data;
   let name;
   let label;
   let stat = 'status';
   let showStatusInput = true;
-  if ('admin_token' in user) {
-    label = 'location';
+  if (user.admin) {
+    label = 'New location';
     name = '_location';
   } else {
     showStatusInput = false;
-    label = 'destination';
+    label = 'New destination';
     name = '_destination';
     stat = 'destination';
   }
+
   return (
     <div className="bg-transparent mt-3">
       <form
+        action=""
         onSubmit={handleSubmit}
         className="flex flex-col items-center bg-purple-600 bg-opacity-25"
       >
@@ -22,16 +27,12 @@ const ChangeDestination = ({ handleSubmit, handleChange, user }) => {
           Fill the form below to change the order {stat}
         </h2>
         <div className="flex flex-col w-11/12 mb-3">
-          <label className="mb-1">New {label}</label>
-          <input
-            type="text"
-            className="w-5/6"
-            id="newDestination"
-            name={name}
-            required
-            onChange={handleChange}
+          <PlaceAutocomplete
+            data={data}
+            label={label}
+            inputName={name}
+            key={'location'}
           />
-          <small></small>
         </div>
         {showStatusInput && (
           <div className="flex flex-col w-11/12 mb-3">
@@ -40,9 +41,9 @@ const ChangeDestination = ({ handleSubmit, handleChange, user }) => {
               className="w-5/6"
               name="_status"
               id="status"
-              onChange={handleChange}
+              onChange={handleSelectChange}
             >
-              <option value="In transit"></option>
+              <option value="At the location">At the location</option>
               <option value="In transit">In transit</option>
               <option value="Delivered">Delivered</option>
             </select>

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import LogoHamburger from './Logohamburger';
 import NavLinks from './Navlinks';
 
-const Navbar = () => {
+const Navbar = ({ linkItems }) => {
   const [toggleMenu, setToggleMenu] = useState(false);
 
   const handleClick = () => {
@@ -23,7 +23,7 @@ const Navbar = () => {
     >
       <LogoHamburger handleClick={handleClick} />
       <div {...menuDiv}>
-        <NavLinks />
+        <NavLinks linkItems={linkItems} />
       </div>
     </nav>
   );

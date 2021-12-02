@@ -7,6 +7,7 @@ const AdminComponent = ({ data, adminEvents }) => {
     handleNewPackage,
     handlePackageInTransit,
     handleDeliveredPackage,
+    handleCanceledPackage,
   } = adminEvents;
 
   const handlePackage = () => {
@@ -60,6 +61,12 @@ const AdminComponent = ({ data, adminEvents }) => {
               onClick={handleDeliveredPackage}
             >
               Delivered packages
+            </button>
+            <button
+              className="py-3 mb-2 bg-btnbg mx-2 rounded-lg hover:bg-purple-500 hover:text-white md:w-full"
+              onClick={handleCanceledPackage}
+            >
+              Canceled packages
             </button>
           </div>
         )}

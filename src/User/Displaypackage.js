@@ -1,5 +1,6 @@
 const DisplayPackage = () => {
   const packages = JSON.parse(localStorage.getItem('selectedPackage'));
+
   return (
     <div className="bg-packagebg bg-opacity-40 shadow-lg p-2 rounded">
       <div className="flex flex-col items-center my-4">

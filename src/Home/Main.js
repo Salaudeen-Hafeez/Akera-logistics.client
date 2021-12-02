@@ -1,10 +1,6 @@
 import About from './About';
 import Maincomponent from './Miancomponent';
-import { useRouteMatch, Link } from 'react-router';
 const Main = ({ message }) => {
-  const { path, url } = useRouteMatch();
-  console.log('Hello everyone');
-  console.log(url);
   return (
     <main>
       <div className="md:flex md:justify-center md:items-center md:w-full bg-gray-200 ">

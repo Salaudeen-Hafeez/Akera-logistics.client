@@ -16,5 +16,4 @@ const useLoginForm = (validate) => {
 
   return { handleChange, values };
 };
-
 export default useLoginForm;

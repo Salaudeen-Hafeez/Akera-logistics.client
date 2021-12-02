@@ -1,16 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import useFetchPut from '../Fetchhooks/useFetchPut';
 import useFetchGet from '../Fetchhooks/useFetchGet';
 import AppMap from '../Map';
 import ChangeDestination from '../Postpackage/Changedestination';
-import Navbar from '../Universal/Navbar';
 import Button from './Button';
-import DisplayPackage from './Packagepage';
+import DisplayPackage from './Displaypackage';
+import useDestinationForm from '../Postpackage/useDestinationForm';
+import validateForm from '../Universal/ValidateForm';
 
 const PackageDetail = () => {
-  const [url, setUrl] = useState('');
-  const [values, setValues] = useState({});
   const usehistory = new useHistory();
   const [packages, setPackages] = useState(
     JSON.parse(localStorage.getItem('selectedPackage'))
@@ -22,21 +20,22 @@ const PackageDetail = () => {
   const [geoCode2Url, setGeoCode2Url] = useState(
     `https://maps.googleapis.com/maps/api/geocode/json?address=${packages._destination}&key=AIzaSyD9LtzkCH903RTWTMDehYnSmOVitAhBtwA`
   );
+  const {
+    user,
+    data,
+    error,
+    values,
+    isLoading,
+    fetchError,
+    handleSubmit,
+    handleCancelButton,
+    handleSelectChange,
+  } = useDestinationForm(validateForm);
 
   let location = {};
   let destination = {};
-
-  const { data, isLoading } = useFetchPut(url, values);
-  const user =
-    JSON.parse(localStorage.getItem('userData')) ||
-    JSON.parse(localStorage.getItem('adminData'));
-  const { _email, users_id } = user.data;
-
-  const useruri = `https://sendit-logistic-2021.herokuapp.com/api/v1/users/${_email}/${users_id}/${user.data.auth_token}/packages/${packages.parcel_id}`;
-  const adminuri = `https://sendit-logistic-2021.herokuapp.com/api/v1/users/${_email}/${users_id}/${user.data.admin_token}/packages/${packages.parcel_id}`;
   const geoCode1 = useFetchGet(geoCode1Url);
   const geoCode2 = useFetchGet(geoCode2Url);
-
   if (geoCode1.data !== null && geoCode2.data !== null) {
     if (geoCode1.data.status === 'OK' && geoCode2.data.status === 'OK') {
       location = geoCode1.data.results[0].geometry.location;
@@ -44,19 +43,11 @@ const PackageDetail = () => {
     }
   }
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setValues({
-      ...values,
-      [name]: value.trim(),
-    });
-  };
-
   useEffect(() => {
-    if (Object.keys(data).length !== 0) {
+    if (data !== null) {
       localStorage.setItem('selectedPackage', JSON.stringify(data));
       setPackages(data);
-      setUrl('');
+
       setGeoCode1Url(
         `https://maps.googleapis.com/maps/api/geocode/json?address=${data._location}&key=AIzaSyD9LtzkCH903RTWTMDehYnSmOVitAhBtwA`
       );
@@ -66,42 +57,39 @@ const PackageDetail = () => {
     }
   }, [data]);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if ('admin_token' in user.data) {
-      setUrl(adminuri);
-    } else {
-      setUrl(useruri);
-    }
-  };
-
   const handleOkayButton = (e) => {
     e.preventDefault();
-    if ('admin_token' in user.data) {
-      usehistory.go(-1);
-    } else {
-      usehistory.push('/userpage');
-    }
+    usehistory.go(-1);
+  };
+
+  const usePackageFormData = {
+    handleSelectChange,
+    handleSubmit,
+    fetchError,
+    isLoading,
+    values,
+    error,
   };
   return (
     <div className="">
-      <Navbar />
       <div className="flex justify-center items-center w-full md:items-center bg-gray-200">
         <div className="md:w-3/5">
           <h2 className="text-center font-bold py-3">Package details</h2>
           <DisplayPackage />
-          <Button handleOkayButton={handleOkayButton} />
+          <Button
+            handleOkayButton={handleOkayButton}
+            handleCancelButton={handleCancelButton}
+          />
           <AppMap location={location} destination={destination} />
           {isLoading && (
             <h2 className="font-bold mt-3 text-center">
               updating destination...
             </h2>
           )}
-          <ChangeDestination
-            handleSubmit={handleSubmit}
-            handleChange={handleChange}
-            user={user.data}
-          />
+
+          <div className="flex flex-col w-11/12 mb-3">
+            <ChangeDestination data={usePackageFormData} user={user} />
+          </div>
         </div>
       </div>
     </div>

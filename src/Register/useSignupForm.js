@@ -13,10 +13,9 @@ const useSignupForm = (validate) => {
     const { name, value } = e.target;
     setValues({
       ...values,
-      [name]: value.trim(),
+      [name]: value,
     });
   };
-
   return { handleChange, values };
 };
 

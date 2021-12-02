@@ -3,12 +3,17 @@ import validateForm from '../Universal/ValidateForm';
 import PackageComponent from './Packagecomponent';
 import Logo from '../Universal/Logo';
 import CheckboxComponent from './Chechbox';
+import PlaceAutocomplete from '../Placeautocomplete';
 
 const Package = () => {
-  const { handleChange, handleSubmit, values, error, isLoading, fetchError } =
+  const { handleChange, handleSubmit, isLoading, values, error } =
     usePackageForm(validateForm);
 
-  const usePackageFormData = { handleChange, values, error };
+  const usePackageFormData = {
+    handleChange,
+    values,
+    error,
+  };
 
   return (
     <div
@@ -32,27 +37,23 @@ const Package = () => {
             </p>
           </div>
           {isLoading && <h2>Loading....</h2>}
-          {fetchError !== null && <h2>Kindly login to make order</h2>}
           <div>
-            <PackageComponent
-              data={usePackageFormData}
-              label={'Username'}
-              inputName={'username'}
-            />
             <PackageComponent
               data={usePackageFormData}
               label={'Package name'}
               inputName={'name'}
             />
-            <PackageComponent
+            <PlaceAutocomplete
               data={usePackageFormData}
               label={'Location'}
               inputName={'location'}
+              key={'location'}
             />
-            <PackageComponent
+            <PlaceAutocomplete
               data={usePackageFormData}
               label={'Destination'}
               inputName={'destination'}
+              key={'destination'}
             />
             <PackageComponent
               data={usePackageFormData}

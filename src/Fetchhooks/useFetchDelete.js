@@ -1,10 +1,9 @@
 import { useState, useEffect } from 'react';
 
 const useFetchDelete = (url, values) => {
-  const [data, setData] = useState({});
-  const [fetchError, setFetchError] = useState(null);
+  const [data, setData] = useState(null);
+  const [fetchError, setFetchError] = useState({});
   const [isLoading, setIsLoading] = useState(false);
-
   useEffect(() => {
     const abortConst = new AbortController();
     if (Object.keys(url).length !== 0) {
@@ -18,13 +17,14 @@ const useFetchDelete = (url, values) => {
           return resp.json();
         })
         .then((data) => {
-          if (Object.keys(data).length === 0 || data.message) {
-            setData({});
-            setFetchError(data);
-          } else {
-            setFetchError(null);
+          if (!data.errMessage) {
+            setFetchError({});
             setIsLoading(false);
             setData(data);
+          } else {
+            setData(null);
+            setFetchError(data);
+            setIsLoading(false);
           }
         })
         .catch((err) => {

@@ -11,19 +11,15 @@ const Login = () => {
   const { handleChange, values } = useLoginForm();
   const usehistory = new useHistory();
 
-  const userUrl =
-    'https://sendit-logistic-2021.herokuapp.com/api/v1/users/login';
+  const userUrl = 'https://akera-logistics.herokuapp.com/api/v1/users/login';
   const adminUrl =
-    'https://sendit-logistic-2021.herokuapp.com/api/v1/users/admins/login';
+    'https://akera-logistics.herokuapp.com/api/v1/users/admins/login';
 
-  const data = useFetchPost(url, values);
+  const { data, fetchError, isLoading } = useFetchPost(url, values);
   useEffect(() => {
-    if (data.fetchError !== null) {
-      setError(data.fetchError);
-      setUrl('');
-    }
-  }, [data]);
-
+    setError(fetchError);
+    setUrl('');
+  }, [fetchError]);
   const handleSubmit = (e) => {
     e.preventDefault();
     setError({});
@@ -39,28 +35,26 @@ const Login = () => {
     }
   };
 
-  if (data.data !== null && Object.keys(error).length === 0) {
+  if (data !== null && Object.keys(error).length === 0) {
     localStorage.clear();
     if (values.email.includes('@sendit')) {
       localStorage.setItem('adminData', JSON.stringify(data));
-      usehistory.push('/adminpage');
+      setTimeout(usehistory.push('/adminpage'), 1200);
     } else {
       localStorage.setItem('userData', JSON.stringify(data));
-      usehistory.push('/userpage');
+      setTimeout(usehistory.push('/userpage'), 1200);
     }
   }
 
   return (
     <div className="flex items-center bg-gray-100 justify-center w-full h-screen">
-      {data.isLoading && <h2>Loading...</h2>}
-      {!data.isLoading && (
-        <LoginPage
-          handleChange={handleChange}
-          handleSubmit={handleSubmit}
-          error={error}
-          values={values}
-        />
-      )}
+      <LoginPage
+        handleChange={handleChange}
+        handleSubmit={handleSubmit}
+        isLoading={isLoading}
+        error={error}
+        values={values}
+      />
     </div>
   );
 };

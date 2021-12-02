@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import useFetchGet from '../Fetchhooks/useFetchGet';
 import UserPackages from './Userpackages';
 
@@ -7,23 +6,37 @@ import { useHistory } from 'react-router-dom';
 
 const UserPage = () => {
   const userData = JSON.parse(localStorage.getItem('userData'));
+  const { _username, users_id, _email, auth_token } = userData.user;
   const [url, setUrl] = useState('');
   const [token, setToken] = useState(true);
-  const [updatePackage, setUpdatePackage] = useState(false);
   const [packageData, setPackageData] = useState({});
   const usehistory = new useHistory();
-  const packageUrl = `https://sendit-logistic-2021.herokuapp.com/api/v1/users/${userData.data._username}/${userData.data.users_id}/${userData.data._email}/${userData.data.auth_token}/packages`;
+  const packageUrl = `https://akera-logistics.herokuapp.com/api/v1/users/${_username}/${users_id}/${_email}/${auth_token}/packages`;
+  const pendingPackageUrl = `https://akera-logistics.herokuapp.com/api/v1/users/${_email}/${_username}/${auth_token}/packages/${'In transit'}`;
 
   const { data, fetchError, isLoading } = useFetchGet(url);
-  if (data !== null && updatePackage) {
-    setPackageData(data);
-    setUpdatePackage(false);
-  }
-  const handleClick = () => {
-    setUrl(packageUrl);
-    setUpdatePackage(true);
-  };
+  useEffect(() => {
+    if (data !== null) {
+      setPackageData(data);
+    }
+  }, [data]);
 
+  const handleClick = () => {
+    if (!('auth_token' in userData.user)) {
+      setToken(false);
+      usehistory.push('/login');
+    } else {
+      setToken(true);
+      setUrl(packageUrl);
+    }
+  };
+  const handlePendingPackage = () => {
+    if (!('auth_token' in userData.user)) {
+      usehistory.push('/login');
+    } else {
+      setUrl(pendingPackageUrl);
+    }
+  };
   const handlePackage = (e) => {
     const packageId = parseInt(e.target.attributes.id.textContent);
     const selectedPackage = data.filter((data) => data.parcel_id === packageId);
@@ -32,10 +45,9 @@ const UserPage = () => {
   };
 
   const handleAddPackage = () => {
-    if (!('auth_token' in userData.data)) {
-      setToken(false);
+    if (!('auth_token' in userData.user)) {
+      usehistory.push('/login');
     } else {
-      setToken(true);
       usehistory.push('/addpackage');
     }
   };
@@ -53,12 +65,12 @@ const UserPage = () => {
               className="w-2/5 h-24 rounded-lg mb-4"
             />
             <div className="text-center">
-              <h1 className="text-lg font-bold">{userData.data._name}</h1>
+              <h1 className="text-lg font-bold">{userData.user._name}</h1>
               <ul>
-                <li id="username">{userData.data._username}</li>
-                <li>{userData.data._email}</li>
+                <li id="username">{userData.user._username}</li>
+                <li>{userData.user._email}</li>
                 <li className="text-blue-600 font-bold">
-                  {userData.data._status}
+                  {userData.user._status}
                 </li>
                 <li
                   className="mt-4 
@@ -74,7 +86,9 @@ const UserPage = () => {
               cursor-pointer 
               hover:bg-btnbg"
                 >
-                  <Link to={''}>Pending packages</Link>
+                  <button onClick={handlePendingPackage}>
+                    Pending packages
+                  </button>
                 </li>
               </ul>
             </div>
@@ -83,36 +97,28 @@ const UserPage = () => {
             {isLoading && (
               <h2 className="text-gray-900 font-bold mt-3">Loading...</h2>
             )}
-            {fetchError !== null && token && (
+            {token && fetchError !== null && (
               <h2 className="mt-3 font-bold text-red-500">
-                {fetchError.packages} {fetchError.auth_token}
+                {fetchError.errMessage}
               </h2>
             )}
-            {!token && (
-              <h2 className="mt-3 font-bold text-red-500">
-                Kindly
-                <Link to={'/login'} className="text-blue-500 underline">
-                  Login
-                </Link>
-                to make orders
-              </h2>
-            )}
-            {Object.keys(packageData).length !== 0 && (
-              <div className="md:flex md:flex-col md:justify-center md:items-center md:w-full bg-mainbg">
-                <h2 className="text-center text-gray-800 text-lg font-bold pt-4">
-                  My packages
-                </h2>
-                <div className="md:grid md:grid-cols-2 md:grid-flow-rows md:gap-3 md:w-4/5 md:col-start-2 list-none">
-                  {packageData.map((data) => (
-                    <UserPackages
-                      key={data.parcel_id}
-                      packages={data}
-                      handlePackage={handlePackage}
-                    />
-                  ))}
+            {Object.keys(fetchError).length === 0 &&
+              Object.keys(packageData).length !== 0 && (
+                <div className="md:flex md:flex-col md:justify-center md:items-center md:w-full bg-mainbg">
+                  <h2 className="text-center text-gray-800 text-lg font-bold pt-4">
+                    My packages
+                  </h2>
+                  <div className="md:grid md:grid-cols-2 md:grid-flow-rows md:gap-3 md:w-4/5 md:col-start-2 list-none">
+                    {packageData.map((data) => (
+                      <UserPackages
+                        key={data.parcel_id}
+                        packages={data}
+                        handlePackage={handlePackage}
+                      />
+                    ))}
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
           </div>
           <button
             onClick={handleAddPackage}

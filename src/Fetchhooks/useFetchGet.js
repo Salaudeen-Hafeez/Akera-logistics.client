@@ -2,26 +2,20 @@ import { useState, useEffect } from 'react';
 
 const useFetchGet = (url, values) => {
   const [data, setData] = useState(null);
-  const [fetchError, setFetchError] = useState(null);
+  const [fetchError, setFetchError] = useState({});
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    const abortConst = new AbortController();
+    //const abortConst = new AbortController();
     if (url !== '') {
       setIsLoading(true);
-      fetch(url, { signal: abortConst.signal })
+      fetch(url)
         .then((resp) => {
           return resp.json();
         })
         .then((data) => {
-          if (
-            'parcel_id' in data ||
-            'users_id' in data ||
-            'admin_id' in data ||
-            'results' in data ||
-            Array.isArray(data)
-          ) {
-            setFetchError(null);
+          if (!data.errMessage) {
+            setFetchError({});
             setData(data);
             setIsLoading(false);
           } else {
@@ -36,10 +30,6 @@ const useFetchGet = (url, values) => {
           setIsLoading(false);
         });
     }
-
-    return () => {
-      abortConst.abort();
-    };
   }, [url, values]);
   return { data, fetchError, isLoading };
 };
