@@ -36,12 +36,12 @@ const Login = () => {
   };
 
   if (data !== null && Object.keys(error).length === 0) {
-    localStorage.clear();
+    sessionStorage.clear();
     if (values.email.includes('@sendit')) {
-      localStorage.setItem('adminData', JSON.stringify(data));
+      sessionStorage.setItem('adminData', JSON.stringify(data));
       setTimeout(usehistory.push('/adminpage'), 1200);
     } else {
-      localStorage.setItem('userData', JSON.stringify(data));
+      sessionStorage.setItem('userData', JSON.stringify(data));
       setTimeout(usehistory.push('/userpage'), 1200);
     }
   }

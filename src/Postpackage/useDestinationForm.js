@@ -4,11 +4,11 @@ import useFetchPut from '../Fetchhooks/useFetchPut';
 const useDestinationForm = (validate) => {
   const [error, setError] = useState({});
   const [url, setUrl] = useState('');
-  const packages = JSON.parse(localStorage.getItem('selectedPackage'));
+  const packages = JSON.parse(sessionStorage.getItem('selectedPackage'));
   let token = '';
   const user =
-    JSON.parse(localStorage.getItem('userData')) ||
-    JSON.parse(localStorage.getItem('adminData'));
+    JSON.parse(sessionStorage.getItem('userData')) ||
+    JSON.parse(sessionStorage.getItem('adminData'));
 
   if (user.admin) {
     token = user.admin.admin_token;

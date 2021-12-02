@@ -11,7 +11,7 @@ import validateForm from '../Universal/ValidateForm';
 const PackageDetail = () => {
   const usehistory = new useHistory();
   const [packages, setPackages] = useState(
-    JSON.parse(localStorage.getItem('selectedPackage'))
+    JSON.parse(sessionStorage.getItem('selectedPackage'))
   );
 
   const [geoCode1Url, setGeoCode1Url] = useState(
@@ -45,7 +45,7 @@ const PackageDetail = () => {
 
   useEffect(() => {
     if (data !== null) {
-      localStorage.setItem('selectedPackage', JSON.stringify(data));
+      sessionStorage.setItem('selectedPackage', JSON.stringify(data));
       setPackages(data);
 
       setGeoCode1Url(

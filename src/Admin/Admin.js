@@ -18,7 +18,7 @@ const Admin = () => {
   const { data: data1, fetchError, isLoading } = useFetchGet(url);
   const { data: data2 } = useFetchDelete(deleteUrl);
 
-  const adminData = JSON.parse(localStorage.getItem('adminData'));
+  const adminData = JSON.parse(sessionStorage.getItem('adminData'));
   const { admin_token, _email } = adminData.admin;
 
   useEffect(() => {
@@ -30,7 +30,7 @@ const Admin = () => {
         setUrl('');
       } else if ('parcel_id' in data1[0]) {
         setPackages(data1);
-        localStorage.setItem('usersPackage', JSON.stringify(data1));
+        sessionStorage.setItem('usersPackage', JSON.stringify(data1));
         setUsersDataReady(false);
         setpackageDataReady(true);
         setUrl('');
@@ -120,7 +120,10 @@ const Admin = () => {
     const selectedPackage = packages.filter(
       (data) => data.parcel_id === packageId
     );
-    localStorage.setItem('selectedPackage', JSON.stringify(selectedPackage[0]));
+    sessionStorage.setItem(
+      'selectedPackage',
+      JSON.stringify(selectedPackage[0])
+    );
     usehistory.push('/packagepage');
   };
 

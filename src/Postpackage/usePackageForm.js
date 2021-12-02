@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import useFetchPost from '../Fetchhooks/useFetchPost';
 
 const usePackageForm = (validate) => {
-  const userData = JSON.parse(localStorage.getItem('userData'));
+  const userData = JSON.parse(sessionStorage.getItem('userData'));
   const { _username, _email, auth_token } = userData.user;
   const usehistory = new useHistory();
   const [error, setError] = useState({});
@@ -53,8 +53,8 @@ const usePackageForm = (validate) => {
   };
   const { data, fetchError, isLoading } = useFetchPost(url, values, _username);
   if (data !== null) {
-    localStorage.removeItem('selectedPackage');
-    localStorage.setItem('selectedPackage', JSON.stringify(data));
+    sessionStorage.removeItem('selectedPackage');
+    sessionStorage.setItem('selectedPackage', JSON.stringify(data));
     usehistory.push('/Userpage');
   }
 

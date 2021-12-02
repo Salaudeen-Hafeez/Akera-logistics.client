@@ -5,7 +5,7 @@ import UserPackages from './Userpackages';
 import { useHistory } from 'react-router-dom';
 
 const UserPage = () => {
-  const userData = JSON.parse(localStorage.getItem('userData'));
+  const userData = JSON.parse(sessionStorage.getItem('userData'));
   const { _username, users_id, _email, auth_token } = userData.user;
   const [url, setUrl] = useState('');
   const [token, setToken] = useState(true);
@@ -40,7 +40,10 @@ const UserPage = () => {
   const handlePackage = (e) => {
     const packageId = parseInt(e.target.attributes.id.textContent);
     const selectedPackage = data.filter((data) => data.parcel_id === packageId);
-    localStorage.setItem('selectedPackage', JSON.stringify(selectedPackage[0]));
+    sessionStorage.setItem(
+      'selectedPackage',
+      JSON.stringify(selectedPackage[0])
+    );
     usehistory.push('/packagepage');
   };
 

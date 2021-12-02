@@ -1,5 +1,5 @@
 const DisplayPackage = () => {
-  const packages = JSON.parse(localStorage.getItem('selectedPackage'));
+  const packages = JSON.parse(sessionStorage.getItem('selectedPackage'));
 
   return (
     <div className="bg-packagebg bg-opacity-40 shadow-lg p-2 rounded">

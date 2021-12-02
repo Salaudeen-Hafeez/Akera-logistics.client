@@ -21,8 +21,8 @@ function App() {
   const [adminloggedIn, setAdminLoggedIn] = useState(false);
   //const [users, setUsers] = useState(null);
   const users =
-    JSON.parse(localStorage.getItem('userData')) ||
-    JSON.parse(localStorage.getItem('adminData'));
+    JSON.parse(sessionStorage.getItem('userData')) ||
+    JSON.parse(sessionStorage.getItem('adminData'));
   useEffect(() => {
     if (users !== null) {
       if (users.user) {

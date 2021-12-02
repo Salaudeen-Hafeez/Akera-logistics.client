@@ -32,11 +32,15 @@ const PlaceAutocomplete = (props) => {
               // inline style for demonstration purpose
               const style = suggestion.active
                 ? {
-                    backgroundColor: '#787571',
+                    backgroundColor: '#5c5c5b',
                     cursor: 'pointer',
-                    color: 'black',
+                    color: 'white',
                   }
-                : { backgroundColor: 'white', cursor: 'pointer' };
+                : {
+                    backgroundColor: 'gray',
+                    color: 'white',
+                    cursor: 'pointer',
+                  };
               return (
                 <div
                   key={suggestion.description}
