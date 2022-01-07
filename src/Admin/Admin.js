@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import useFetchDelete from '../Fetchhooks/useFetchDelete';
 import useFetchGet from '../Fetchhooks/useFetchGet';
 import AdminComponent from './Admincomponent';
@@ -13,7 +13,7 @@ const Admin = () => {
   const [packageDataReady, setpackageDataReady] = useState(false);
   const [toggleUsers, setToggleUsers] = useState(false);
   const [togglePackages, setTogglePackages] = useState(false);
-  const usehistory = new useHistory();
+  const navigate = useNavigate();
 
   const { data: data1, fetchError, isLoading } = useFetchGet(url);
   const { data: data2 } = useFetchDelete(deleteUrl);
@@ -52,7 +52,7 @@ const Admin = () => {
 
   const handleUser = () => {
     if (!admin_token) {
-      usehistory.push('/login');
+      navigate('/login');
     } else {
       setUrl(
         `https://akera-logistics.herokuapp.com/api/v1/users/${_email}/${admin_token}`
@@ -65,7 +65,7 @@ const Admin = () => {
 
   const handleNewPackage = () => {
     if (!admin_token) {
-      usehistory.push('/login');
+      navigate('/login');
     } else {
       const condition = 'At the location';
       setUrl(
@@ -79,7 +79,7 @@ const Admin = () => {
 
   const handleCanceledPackage = () => {
     if (!admin_token) {
-      usehistory.push('/login');
+      navigate('/login');
     } else {
       const condition = 'Order Canceled';
       setUrl(
@@ -92,7 +92,7 @@ const Admin = () => {
   };
   const handlePackageInTransit = () => {
     if (!admin_token) {
-      usehistory.push('/login');
+      navigate('/login');
     } else {
       const condition = 'In transit';
       setUrl(
@@ -105,7 +105,7 @@ const Admin = () => {
 
   const handleDeliveredPackage = () => {
     if (!admin_token) {
-      usehistory.push('/login');
+      navigate('/login');
     } else {
       const condition = 'Delivered';
       setUrl(
@@ -124,7 +124,7 @@ const Admin = () => {
       'selectedPackage',
       JSON.stringify(selectedPackage[0])
     );
-    usehistory.push('/packagepage');
+    navigate('/packagepage');
   };
 
   const handleDelete = (e) => {

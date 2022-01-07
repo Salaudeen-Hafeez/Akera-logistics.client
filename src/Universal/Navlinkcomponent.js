@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 const Navlinkcomponent = ({ linkItem }) => {
   const attribute = 'to';
   const variableAttribute = {
-    [attribute]: linkItem.trim() === 'home' ? '/' : linkItem,
+    [attribute]: linkItem.trim() === 'home' ? '/' : `/${linkItem}`,
   };
   return (
     <Link

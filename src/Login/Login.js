@@ -1,15 +1,18 @@
-import { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useEffect, useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import useFetchPost from '../Fetchhooks/useFetchPost';
 import LoginPage from './Loginpage';
 import useLoginForm from './useLoginForm';
 import validateForm from '../Universal/ValidateForm';
+import { authContext } from '../useAuth';
 
 const Login = () => {
   const [error, setError] = useState({});
   const [url, setUrl] = useState('');
   const { handleChange, values } = useLoginForm();
-  const usehistory = new useHistory();
+  let navigate = useNavigate();
+  const context = useContext(authContext);
+  const { login } = context;
 
   const userUrl = 'https://akera-logistics.herokuapp.com/api/v1/users/login';
   const adminUrl =
@@ -19,7 +22,21 @@ const Login = () => {
   useEffect(() => {
     setError(fetchError);
     setUrl('');
-  }, [fetchError]);
+    if (data !== null && Object.keys(error).length === 0) {
+      sessionStorage.clear();
+      if (values.email.includes('@sendit')) {
+        sessionStorage.setItem('adminData', JSON.stringify(data));
+        login().then(() => {
+          navigate('/adminpage');
+        });
+      } else {
+        sessionStorage.setItem('userData', JSON.stringify(data));
+        login().then(() => {
+          navigate('/dashboard');
+        });
+      }
+    }
+  }, [fetchError, data, error, values, navigate, login]);
   const handleSubmit = (e) => {
     e.preventDefault();
     setError({});
@@ -34,17 +51,6 @@ const Login = () => {
       }
     }
   };
-
-  if (data !== null && Object.keys(error).length === 0) {
-    sessionStorage.clear();
-    if (values.email.includes('@sendit')) {
-      sessionStorage.setItem('adminData', JSON.stringify(data));
-      setTimeout(usehistory.push('/adminpage'), 1200);
-    } else {
-      sessionStorage.setItem('userData', JSON.stringify(data));
-      setTimeout(usehistory.push('/userpage'), 1200);
-    }
-  }
 
   return (
     <div className="flex items-center bg-gray-100 justify-center w-full h-screen">

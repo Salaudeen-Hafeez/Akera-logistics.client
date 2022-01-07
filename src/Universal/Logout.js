@@ -1,11 +1,16 @@
-import { Route, Redirect } from 'react-router-dom';
+import { useEffect, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { authContext } from '../useAuth';
 const Logout = () => {
-  localStorage.clear();
-  return (
-    <Route exact path="/Logout">
-      <Redirect to={'/'}></Redirect>
-    </Route>
-  );
+  const navigate = useNavigate();
+  const context = useContext(authContext);
+  const { logout } = context;
+  sessionStorage.clear();
+  useEffect(() => {
+    logout();
+    navigate('/');
+  });
+  return null;
 };
 
 export default Logout;

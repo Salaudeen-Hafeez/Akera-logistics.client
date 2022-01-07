@@ -1,38 +1,18 @@
-import { useState, useEffect } from 'react';
 import Navbar from './Universal/Navbar';
-import Banner from './Home/Banner';
 import Logout from './Universal/Logout';
-import Main from './Home/Main';
 import Login from './Login/Login';
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-  Redirect,
-} from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import SignUp from './Register/Signup';
 import Package from './Postpackage/Package';
 import UserPage from './User/Userpage';
 import PackageDetail from './User/Packagedetail';
 import Admin from './Admin/Admin';
+import { AuthProvider } from './useAuth';
+import RequireAuth from './RequireAuth';
+import Home from './Home/Home';
+import PageNotFound from './404';
 
 function App() {
-  const [userloggedIn, setUserLoggedIn] = useState(false);
-  const [adminloggedIn, setAdminLoggedIn] = useState(false);
-  //const [users, setUsers] = useState(null);
-  const users =
-    JSON.parse(sessionStorage.getItem('userData')) ||
-    JSON.parse(sessionStorage.getItem('adminData'));
-  useEffect(() => {
-    if (users !== null) {
-      if (users.user) {
-        setUserLoggedIn(true);
-      } else {
-        setAdminLoggedIn(true);
-      }
-    }
-  }, [users]);
-
   const message = {
     packaging: 'We do the packaging',
     seal: 'We seal the package',
@@ -40,58 +20,68 @@ function App() {
     deliver: 'We deliver the package',
   };
   const homeNav = ['signup', 'login'];
-  const userNav = ['Profile', 'My Packages', 'Logout'];
-  const adminNav = ['home', 'Users', 'Packages', 'Logout'];
+  const adminNav = ['home', 'Users', 'Packages', 'logout'];
 
   return (
-    <Router>
-      <div className="font-serif">
-        <Switch>
-          <Route exact path="/login">
-            <Login />
-          </Route>
+    <AuthProvider>
+      <Router>
+        <div className="font-serif">
+          <Routes>
+            <Route
+              path="/login"
+              element={
+                <RequireAuth>
+                  <Login />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="/"
+              element={<Home homeNav={homeNav} message={message} />}
+            />
 
-          <Route exact path="/">
-            {userloggedIn ? (
-              <Redirect to="/userpage" />
-            ) : adminloggedIn ? (
-              <Redirect to="/adminpage" />
-            ) : (
-              <div>
-                <Navbar linkItems={homeNav} />
-                <Banner />
-                <Main message={message} />
-              </div>
-            )}
-          </Route>
-
-          <Route exact path="/signup">
-            <SignUp />
-          </Route>
-
-          <Route exact path="/addpackage">
-            <Package />
-          </Route>
-
-          <Route exact path="/userpage">
-            <Navbar linkItems={userNav} />
-            <UserPage />
-          </Route>
-
-          <Route exact path="/packagepage">
-            <PackageDetail />
-          </Route>
-
-          <Route exact path="/adminpage">
-            <Navbar linkItems={adminNav} />
-            <Admin />
-          </Route>
-          <Route exact path="/logout">
-            <Logout />
-          </Route>
-        </Switch>
-      </div>
-    </Router>
+            <Route path="/signup" element={<SignUp />} />
+            <Route
+              path="/addpackage"
+              element={
+                <RequireAuth>
+                  <Package />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="/dashboard"
+              element={
+                <RequireAuth>
+                  <UserPage />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="/packagepage"
+              element={
+                <RequireAuth>
+                  <PackageDetail />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="/adminpage"
+              element={
+                <RequireAuth>
+                  <div>
+                    <Navbar linkItems={adminNav} />
+                    <Admin />
+                  </div>
+                </RequireAuth>
+              }
+            />
+            <Route path="/logout" element={<Logout />} />
+            <Route path="*" element={<PageNotFound />} />
+          </Routes>
+        </div>
+      </Router>
+    </AuthProvider>
   );
 }
 

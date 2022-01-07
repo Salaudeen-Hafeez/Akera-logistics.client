@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import useFetchGet from '../Fetchhooks/useFetchGet';
 import AppMap from '../Map';
 import ChangeDestination from '../Postpackage/Changedestination';
@@ -9,7 +9,7 @@ import useDestinationForm from '../Postpackage/useDestinationForm';
 import validateForm from '../Universal/ValidateForm';
 
 const PackageDetail = () => {
-  const usehistory = new useHistory();
+  const navigate = useNavigate();
   const [packages, setPackages] = useState(
     JSON.parse(sessionStorage.getItem('selectedPackage'))
   );
@@ -59,7 +59,7 @@ const PackageDetail = () => {
 
   const handleOkayButton = (e) => {
     e.preventDefault();
-    usehistory.go(-1);
+    navigate(-1);
   };
 
   const usePackageFormData = {

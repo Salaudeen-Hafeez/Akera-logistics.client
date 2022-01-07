@@ -1,11 +1,11 @@
 import { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import useFetchPost from '../Fetchhooks/useFetchPost';
 
 const usePackageForm = (validate) => {
   const userData = JSON.parse(sessionStorage.getItem('userData'));
   const { _username, _email, auth_token } = userData.user;
-  const usehistory = new useHistory();
+  const navigate = useNavigate();
   const [error, setError] = useState({});
   const [url, setUrl] = useState('');
   const [values, setValues] = useState({
@@ -40,7 +40,6 @@ const usePackageForm = (validate) => {
       });
     }
   };
-  console.log(values);
   const handleSubmit = (e) => {
     e.preventDefault();
     const errors = validate(values);
@@ -55,7 +54,7 @@ const usePackageForm = (validate) => {
   if (data !== null) {
     sessionStorage.removeItem('selectedPackage');
     sessionStorage.setItem('selectedPackage', JSON.stringify(data));
-    usehistory.push('/Userpage');
+    navigate('/dashboard');
   }
 
   return {

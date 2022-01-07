@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import useSignupForm from './useSignupForm';
 import useFetchPost from '../Fetchhooks/useFetchPost';
 import validateForm from '../Universal/ValidateForm';
@@ -9,13 +9,12 @@ import SignupComponent from './SignupComponent';
 const SignUp = () => {
   const [error, setError] = useState({});
   const [url, setUrl] = useState('');
-  const usehistory = new useHistory();
+  const navigate = useNavigate();
   const { handleChange, values } = useSignupForm();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const errors = validateForm(values);
-    console.log(errors);
     setError(errors);
     if (Object.keys(errors).length === 0) {
       if (values.email.includes('@sendit.com')) {
@@ -31,10 +30,10 @@ const SignUp = () => {
     sessionStorage.clear();
     if (values.email.includes('@sendit')) {
       sessionStorage.setItem('adminData', JSON.stringify(data));
-      setTimeout(usehistory.push('/adminpage'), 1200);
+      setTimeout(navigate('/adminpage'), 1200);
     } else {
       sessionStorage.setItem('userData', JSON.stringify(data));
-      setTimeout(usehistory.push('/userpage'), 1200);
+      setTimeout(navigate('/userpage'), 1200);
     }
   }
 
