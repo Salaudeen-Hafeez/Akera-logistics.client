@@ -7,7 +7,7 @@ const SignupComponent = ({ signupData, formData }) => {
       <input
         type={formData[0]}
         name={formData[2]}
-        className="bg-gray-600 focus:bg-gray-800 h-6 hover:bg-gray-900"
+        className="bg-gray-700 focus:bg-gray-800 h-6 hover:bg-gray-900"
         value={values[name]}
         onChange={handleChange}
       />
