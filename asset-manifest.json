@@ -1,0 +1,21 @@
+{
+  "files": {
+    "main.css": "/Akera-logistics.client/static/css/main.5701b5b3.chunk.css",
+    "main.js": "/Akera-logistics.client/static/js/main.851fe849.chunk.js",
+    "main.js.map": "/Akera-logistics.client/static/js/main.851fe849.chunk.js.map",
+    "runtime-main.js": "/Akera-logistics.client/static/js/runtime-main.da049b56.js",
+    "runtime-main.js.map": "/Akera-logistics.client/static/js/runtime-main.da049b56.js.map",
+    "static/js/2.cca9d7f6.chunk.js": "/Akera-logistics.client/static/js/2.cca9d7f6.chunk.js",
+    "static/js/2.cca9d7f6.chunk.js.map": "/Akera-logistics.client/static/js/2.cca9d7f6.chunk.js.map",
+    "index.html": "/Akera-logistics.client/index.html",
+    "static/css/main.5701b5b3.chunk.css.map": "/Akera-logistics.client/static/css/main.5701b5b3.chunk.css.map",
+    "static/js/2.cca9d7f6.chunk.js.LICENSE.txt": "/Akera-logistics.client/static/js/2.cca9d7f6.chunk.js.LICENSE.txt",
+    "static/media/index.css": "/Akera-logistics.client/static/media/logistics-bg.c92e0eba.jpg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.da049b56.js",
+    "static/js/2.cca9d7f6.chunk.js",
+    "static/css/main.5701b5b3.chunk.css",
+    "static/js/main.851fe849.chunk.js"
+  ]
+}
