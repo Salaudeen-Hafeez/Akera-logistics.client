@@ -1,4 +1,5 @@
 {
+  "homepage": "https://Salaudeen-Hafeez.github.io/Akera-logistics.client",
   "name": "client",
   "version": "0.1.0",
   "private": true,
@@ -7,15 +8,20 @@
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
+    "autoprefixer": "^9.8.8",
     "google-map-react": "^2.1.10",
+    "postcss": "^7.0.39",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-places-autocomplete": "^7.3.0",
     "react-router-dom": "^6.1.1",
     "react-scripts": "4.0.3",
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.17",
     "web-vitals": "^1.1.2"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "craco start",
     "build": "craco build",
     "test": "craco test",
@@ -40,12 +46,6 @@
     ]
   },
   "devDependencies": {
-    "autoprefixer": "^10.4.2",
-    "gh-pages": "^3.2.3",
-    "postcss": "^8.4.5",
-    "tailwindcss": "^3.0.12"
-  },
-  "peerDependencies": {
-    "postcss": "^8.0.0"
+    "gh-pages": "^3.2.3"
   }
 }
