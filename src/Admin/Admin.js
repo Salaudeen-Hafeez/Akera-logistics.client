@@ -19,7 +19,7 @@ const Admin = () => {
   const { data: data2 } = useFetchDelete(deleteUrl);
 
   const adminData = JSON.parse(sessionStorage.getItem('adminData'));
-  const { admin_token, _email } = adminData.admin;
+  const { admin_token } = adminData.admin;
 
   useEffect(() => {
     if (Array.isArray(data1) && data1.length) {
@@ -54,9 +54,7 @@ const Admin = () => {
     if (!admin_token) {
       navigate('/login');
     } else {
-      setUrl(
-        `https://akera-logistics.herokuapp.com/api/v1/users/${_email}/${admin_token}`
-      );
+      setUrl(`https://akera-logistics.herokuapp.com/api/v1/${admin_token}`);
       setToggleUsers(!toggleUsers);
       setUsersDataReady(true);
       setpackageDataReady(false);
@@ -67,9 +65,9 @@ const Admin = () => {
     if (!admin_token) {
       navigate('/login');
     } else {
-      const condition = 'At the location';
+      const _status = 'At the location';
       setUrl(
-        `https://akera-logistics.herokuapp.com/api/v1/users/${_email}/${admin_token}/packages/${condition}`
+        `https://akera-logistics.herokuapp.com/api/v1/packages/${_status}/${admin_token}`
       );
       setTogglePackages(!togglePackages);
       setUsersDataReady(false);
@@ -81,9 +79,9 @@ const Admin = () => {
     if (!admin_token) {
       navigate('/login');
     } else {
-      const condition = 'Order Canceled';
+      const _status = 'Order Canceled';
       setUrl(
-        `https://akera-logistics.herokuapp.com/api/v1/users/${_email}/${admin_token}/packages/${condition}`
+        `https://akera-logistics.herokuapp.com/api/v1/packages/${_status}/${admin_token}`
       );
       setTogglePackages(!togglePackages);
       setUsersDataReady(false);
@@ -94,9 +92,9 @@ const Admin = () => {
     if (!admin_token) {
       navigate('/login');
     } else {
-      const condition = 'In transit';
+      const _status = 'In transit';
       setUrl(
-        `https://akera-logistics.herokuapp.com/api/v1/users/${_email}/${admin_token}/packages/${condition}`
+        `https://akera-logistics.herokuapp.com/api/v1/packages/${_status}/${admin_token}`
       );
       setTogglePackages(!togglePackages);
       setUsersDataReady(false);
@@ -107,9 +105,9 @@ const Admin = () => {
     if (!admin_token) {
       navigate('/login');
     } else {
-      const condition = 'Delivered';
+      const _status = 'Delivered';
       setUrl(
-        `https://akera-logistics.herokuapp.com/api/v1/users/${_email}/${admin_token}/packages/${condition}`
+        `https://akera-logistics.herokuapp.com/api/v1/packages/${_status}/${admin_token}`
       );
       setTogglePackages(!togglePackages);
       setUsersDataReady(false);
@@ -131,9 +129,8 @@ const Admin = () => {
     e.preventDefault();
     const id = e.target.parentElement.parentElement.id;
     const username = e.target.parentElement.parentElement.children[1].innerText;
-    const status = e.target.parentElement.children[0].innerText;
     setDeleteUrl(
-      `https://akera-logistics.herokuapp.com/api/v1/users/${_email}/${admin_token}/${username}/packages/${id}/${status}`
+      `https://akera-logistics.herokuapp.com/api/v1/${username}/packages/${id}/${admin_token}`
     );
   };
 
@@ -143,10 +140,9 @@ const Admin = () => {
 
   const handleDeleteUser = (e) => {
     e.preventDefault();
-    const id = e.target.parentElement.parentElement.id;
     const username = e.target.parentElement.parentElement.children[2].innerText;
     setDeleteUrl(
-      `https://akera-logistics.herokuapp.com/api/v1/users/${_email}/${admin_token}/${username}/${id}`
+      `https://akera-logistics.herokuapp.com/api/v1/${username}/${admin_token}`
     );
   };
 
@@ -159,34 +155,34 @@ const Admin = () => {
   };
 
   return (
-    <div className="bg-gray-200 bg-opacity-15">
+    <div className='bg-gray-200 bg-opacity-15'>
       <AdminComponent data={adminData.admin} adminEvents={adminEvents} />
-      <div className="md:w-full md:flex md:justify-center">
+      <div className='md:w-full md:flex md:justify-center'>
         {usersDataReady && users !== null && (
           <div
-            className="md:grid md:grid-cols-3 md:grid-flow-rows 
-          md:gap-3 list-none"
+            className='md:grid md:grid-cols-3 md:grid-flow-rows 
+          md:gap-3 list-none'
           >
             {users.map((user) => {
               return (
                 <div
                   id={user.users_id}
                   key={user.users_id}
-                  className="bg-mainbg p-3 rounded-lg 
-                  cursor-pointer shadow-inner hover:shadow-md"
+                  className='bg-mainbg p-3 rounded-lg 
+                  cursor-pointer shadow-inner hover:shadow-md'
                 >
-                  <h2 className="font-bold ">{user._name}</h2>
+                  <h2 className='font-bold '>{user._name}</h2>
                   <p>{user._email}</p>
                   <p>{user._username}</p>
-                  <div className="flex items-end justify-between pt-2">
+                  <div className='flex items-end justify-between pt-2'>
                     <p
-                      className="text-blue-700 underline cursor-pointer"
+                      className='text-blue-700 underline cursor-pointer'
                       onClick={handleSelectedUser}
                     >
                       {user._status}
                     </p>
                     <button
-                      className="text-right pr-3 text-red-400"
+                      className='text-right pr-3 text-red-400'
                       onClick={handleDeleteUser}
                     >
                       delete
@@ -197,16 +193,16 @@ const Admin = () => {
             })}
           </div>
         )}
-        {isLoading && <h2 className="text-center mt-10">Loading...</h2>}
+        {isLoading && <h2 className='text-center mt-10'>Loading...</h2>}
         {Object.keys(fetchError).length !== 0 && (
-          <h2 className="mt-3 font-bold text-red-500 text-center">
+          <h2 className='mt-3 font-bold text-red-500 text-center'>
             {fetchError.errMessage}
           </h2>
         )}
         {packageDataReady && packages !== null && (
           <div
-            className="md:grid md:grid-cols-3 md:grid-flow-rows 
-          md:gap-3 list-none"
+            className='md:grid md:grid-cols-3 md:grid-flow-rows 
+          md:gap-3 list-none'
           >
             {packages.map((packag) => {
               return (
@@ -214,21 +210,21 @@ const Admin = () => {
                   key={packag.parcel_id}
                   id={packag.parcel_id}
                   value={packag.parcel_id}
-                  className="bg-mainbg p-3 rounded-lg 
-                   shadow-inner hover:shadow-md"
+                  className='bg-mainbg p-3 rounded-lg 
+                   shadow-inner hover:shadow-md'
                 >
-                  <h2 className="font-bold ">{packag._name}</h2>
+                  <h2 className='font-bold '>{packag._name}</h2>
                   <p>{packag._username}</p>
                   <p>{packag._location}</p>
-                  <div className="flex items-end justify-between pt-2">
+                  <div className='flex items-end justify-between pt-2'>
                     <p
-                      className="text-blue-700 underline cursor-pointer"
+                      className='text-blue-700 underline cursor-pointer'
                       onClick={handleSelectedPackage}
                     >
                       {packag._status}
                     </p>
                     <button
-                      className="text-right pr-3 text-red-400"
+                      className='text-right pr-3 text-red-400'
                       onClick={handleDelete}
                     >
                       delete

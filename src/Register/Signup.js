@@ -18,9 +18,9 @@ const SignUp = () => {
     setError(errors);
     if (Object.keys(errors).length === 0) {
       if (values.email.includes('@sendit.com')) {
-        setUrl('https://akera-logistics.herokuapp.com/api/v1/users/admins');
+        setUrl('https://akera-logistics.herokuapp.com/api/v1/admins');
       } else {
-        setUrl('https://akera-logistics.herokuapp.com/api/v1/users');
+        setUrl('https://akera-logistics.herokuapp.com/api/v1');
       }
     }
   };
@@ -45,35 +45,35 @@ const SignUp = () => {
 
   const signupData = { handleChange, values, error };
   return (
-    <div className="flex items-center bg-gray-100 justify-center w-full h-screen">
+    <div className='flex items-center bg-gray-100 justify-center w-full h-screen'>
       <form
         onSubmit={handleSubmit}
-        className="bg-gray-800 text-white rounded-md min-h-max w-4/5 shadow-2xl md:w-2/5"
+        className='bg-gray-800 text-white rounded-md min-h-max w-4/5 shadow-2xl md:w-2/5'
       >
-        <a href="home.html" className="px-1 inline-flex items-center">
-          <img src="images/logo2.png" alt="Logo" className="w-10 h-9 mr-2" />
-          <span className="text-lg font-bold uppercase tracking-wide">
+        <a href='home.html' className='px-1 inline-flex items-center'>
+          <img src='images/logo2.png' alt='Logo' className='w-10 h-9 mr-2' />
+          <span className='text-lg font-bold uppercase tracking-wide'>
             Akera Logistics
           </span>
         </a>
         <div
-          className="flex flex-col items-left justify-center
-         bg-gray-800 text-white px-10 text-sm h-4/5 rounded-md"
+          className='flex flex-col items-left justify-center
+         bg-gray-800 text-white px-10 text-sm h-4/5 rounded-md'
         >
-          {isLoading && <h2 className="text-center mt-10">Loading...</h2>}
-          <div className="text-center">
-            <h2 className="mb-6 text-lg font-bold">Sign-up Now</h2>
-            <p className="mb-4">
+          {isLoading && <h2 className='text-center mt-10'>Loading...</h2>}
+          <div className='text-center'>
+            <h2 className='mb-6 text-lg font-bold'>Sign-up Now</h2>
+            <p className='mb-4'>
               Please fill the form below to become a member and have access to
               our services
             </p>
           </div>
           {Object.keys(fetchError).length !== 0 && (
-            <h2 className="mt-3 font-bold text-red-500">
+            <h2 className='mt-3 font-bold text-red-500'>
               {fetchError.errMessage}
             </h2>
           )}
-          <div className="">
+          <div className=''>
             <SignupComponent
               signupData={signupData}
               formData={['text', 'Full Name', 'name']}
@@ -96,16 +96,16 @@ const SignUp = () => {
             />
           </div>
           <input
-            type="submit"
-            className="mb-4 px-4 py-2 bg-gray-700 rounded hover:bg-gray-900"
-            id="submitBtn"
-            value="Signup"
+            type='submit'
+            className='mb-4 px-4 py-2 bg-gray-700 rounded hover:bg-gray-900'
+            id='submitBtn'
+            value='Signup'
           />
-          <p className="mb-6 text-center">
+          <p className='mb-6 text-center'>
             Already a member?{' '}
             <Link
-              to="/login"
-              className="text-blue-400 underline hover:text-green-300"
+              to='/login'
+              className='text-blue-400 underline hover:text-green-300'
             >
               Login
             </Link>

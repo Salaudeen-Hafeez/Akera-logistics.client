@@ -15,15 +15,15 @@ const useDestinationForm = (validate) => {
   } else {
     token = user.user.auth_token;
   }
-  const { _email, users_id } = user.user || user.admin;
+  const { _email } = user.user || user.admin;
   const [values, setValues] = useState({});
   const handleSelectChange = (e) => {
     setUrl('');
     setValues({ ...values, [e.target.name]: e.target.value });
   };
-  const uri = `https://akera-logistics.herokuapp.com/api/v1/users/${_email}/${users_id}/${token}/packages/${parseInt(
+  const uri = `https://akera-logistics.herokuapp.com/api/v1/${_email}/packages/${parseInt(
     packages.parcel_id
-  )}`;
+  )}/${token}`;
 
   const { data, fetchError, isLoading } = useFetchPut(url, values);
   const handleSubmit = (e) => {

@@ -14,9 +14,8 @@ const Login = () => {
   const context = useContext(authContext);
   const { login } = context;
 
-  const userUrl = 'https://akera-logistics.herokuapp.com/api/v1/users/login';
-  const adminUrl =
-    'https://akera-logistics.herokuapp.com/api/v1/users/admins/login';
+  const userUrl = 'https://akera-logistics.herokuapp.com/api/v1/login';
+  const adminUrl = 'https://akera-logistics.herokuapp.com/api/v1/admins/login';
 
   const { data, fetchError, isLoading } = useFetchPost(url, values);
   useEffect(() => {
@@ -53,7 +52,7 @@ const Login = () => {
   };
 
   return (
-    <div className="flex items-center bg-gray-100 justify-center w-full h-screen">
+    <div className='flex items-center bg-gray-100 justify-center w-full h-screen'>
       <LoginPage
         handleChange={handleChange}
         handleSubmit={handleSubmit}

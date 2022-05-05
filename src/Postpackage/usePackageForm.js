@@ -4,7 +4,7 @@ import useFetchPost from '../Fetchhooks/useFetchPost';
 
 const usePackageForm = (validate) => {
   const userData = JSON.parse(sessionStorage.getItem('userData'));
-  const { _username, _email, auth_token } = userData.user;
+  const { _username, auth_token } = userData.user;
   const navigate = useNavigate();
   const [error, setError] = useState({});
   const [url, setUrl] = useState('');
@@ -17,7 +17,7 @@ const usePackageForm = (validate) => {
     frajile: '',
     username: _username,
   });
-  const uri = `https://akera-logistics.herokuapp.com/api/v1/users/${_username}/${_email}/${auth_token}/packages`;
+  const uri = `https://akera-logistics.herokuapp.com/api/v1/packages/${auth_token}`;
 
   const handleChange = (e) => {
     const { name, value } = e.target;
