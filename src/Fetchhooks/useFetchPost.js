@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 
 const useFetchPost = (url, values) => {
   const [data, setData] = useState(null);
@@ -11,9 +11,16 @@ const useFetchPost = (url, values) => {
     token = user.auth_token;
   }
 
-  const myHeaders = new Headers();
-  myHeaders.append('Content-Type', 'application/json');
-  myHeaders.append('Authorization', token);
+  const getHeaders = (token) => {
+    const myHeaders = new Headers();
+    myHeaders.append('Content-Type', 'application/json');
+    myHeaders.append('Authorization', token);
+    return myHeaders;
+  };
+
+  const myHeaders = useMemo(() => {
+    getHeaders(token);
+  }, [token]);
 
   useEffect(() => {
     // const abortConst = new AbortController();
