@@ -54,7 +54,7 @@ const Admin = () => {
     if (!admin_token) {
       navigate('/login');
     } else {
-      setUrl(`https://akera-logistics.herokuapp.com/api/v1/${admin_token}`);
+      setUrl(`https://akera-logistics.herokuapp.com/api/v1`);
       setToggleUsers(!toggleUsers);
       setUsersDataReady(true);
       setpackageDataReady(false);
@@ -66,9 +66,7 @@ const Admin = () => {
       navigate('/login');
     } else {
       const _status = 'At the location';
-      setUrl(
-        `https://akera-logistics.herokuapp.com/api/v1/packages/${_status}/${admin_token}`
-      );
+      setUrl(`https://akera-logistics.herokuapp.com/api/v1/parcels/${_status}`);
       setTogglePackages(!togglePackages);
       setUsersDataReady(false);
       setpackageDataReady(true);
@@ -80,9 +78,7 @@ const Admin = () => {
       navigate('/login');
     } else {
       const _status = 'Order Canceled';
-      setUrl(
-        `https://akera-logistics.herokuapp.com/api/v1/packages/${_status}/${admin_token}`
-      );
+      setUrl(`https://akera-logistics.herokuapp.com/api/v1/parcels/${_status}`);
       setTogglePackages(!togglePackages);
       setUsersDataReady(false);
       setpackageDataReady(true);
@@ -93,9 +89,7 @@ const Admin = () => {
       navigate('/login');
     } else {
       const _status = 'In transit';
-      setUrl(
-        `https://akera-logistics.herokuapp.com/api/v1/packages/${_status}/${admin_token}`
-      );
+      setUrl(`https://akera-logistics.herokuapp.com/api/v1/parcels/${_status}`);
       setTogglePackages(!togglePackages);
       setUsersDataReady(false);
     }
@@ -106,9 +100,7 @@ const Admin = () => {
       navigate('/login');
     } else {
       const _status = 'Delivered';
-      setUrl(
-        `https://akera-logistics.herokuapp.com/api/v1/packages/${_status}/${admin_token}`
-      );
+      setUrl(`https://akera-logistics.herokuapp.com/api/v1/parcels/${_status}`);
       setTogglePackages(!togglePackages);
       setUsersDataReady(false);
     }
@@ -128,9 +120,8 @@ const Admin = () => {
   const handleDelete = (e) => {
     e.preventDefault();
     const id = e.target.parentElement.parentElement.id;
-    const username = e.target.parentElement.parentElement.children[1].innerText;
     setDeleteUrl(
-      `https://akera-logistics.herokuapp.com/api/v1/${username}/packages/${id}/${admin_token}`
+      `https://akera-logistics.herokuapp.com/api/v1/parcels/${id}/delete`
     );
   };
 
@@ -140,9 +131,9 @@ const Admin = () => {
 
   const handleDeleteUser = (e) => {
     e.preventDefault();
-    const username = e.target.parentElement.parentElement.children[2].innerText;
+    const id = e.target.parentElement.parentElement.children[2].innerText;
     setDeleteUrl(
-      `https://akera-logistics.herokuapp.com/api/v1/${username}/${admin_token}`
+      `https://akera-logistics.herokuapp.com/api/v1/users/${id}/delete`
     );
   };
 

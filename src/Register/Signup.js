@@ -17,11 +17,7 @@ const SignUp = () => {
     const errors = validateForm(values);
     setError(errors);
     if (Object.keys(errors).length === 0) {
-      if (values.email.includes('@sendit.com')) {
-        setUrl('https://akera-logistics.herokuapp.com/api/v1/admins');
-      } else {
-        setUrl('https://akera-logistics.herokuapp.com/api/v1');
-      }
+      setUrl('https://akera-logistics.herokuapp.com/api/v1/login');
     }
   };
   const { data, fetchError, isLoading } = useFetchPost(url, values);

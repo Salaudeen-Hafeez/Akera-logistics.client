@@ -5,11 +5,28 @@ const useFetchGet = (url, values) => {
   const [fetchError, setFetchError] = useState({});
   const [isLoading, setIsLoading] = useState(false);
 
+  const admin = JSON.parse(localStorage.getItem('admin'));
+  const user = JSON.parse(localStorage.getItem('user'));
+  let token;
+  if (admin) {
+    token = admin.admin_token;
+  } else if (user) {
+    token = user.auth_token;
+  }
+
+  const myHeaders = new Headers();
+  myHeaders.append('Content-Type', 'application/json');
+  myHeaders.append('Authorization', token);
+
   useEffect(() => {
     //const abortConst = new AbortController();
     if (url !== '') {
       setIsLoading(true);
-      fetch(url)
+      fetch(url, {
+        // signal: abortConst.signal,
+        method: 'GET',
+        headers: myHeaders,
+      })
         .then((resp) => {
           return resp.json();
         })

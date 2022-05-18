@@ -7,14 +7,13 @@ import { useNavigate } from 'react-router-dom';
 
 const UserPage = () => {
   const userData = JSON.parse(sessionStorage.getItem('userData'));
-  const { _username, auth_token } = userData.user;
   const [url, setUrl] = useState('');
   const [token, setToken] = useState(true);
   const [packageData, setPackageData] = useState({});
   const navigate = useNavigate();
   const userNav = ['Logout'];
-  const packageUrl = `https://akera-logistics.herokuapp.com/api/v1/${_username}/packages/${auth_token}`;
-  const pendingPackageUrl = `https://akera-logistics.herokuapp.com/api/v1/packages/${_username}/${'In transit'}/${auth_token}`;
+  const packageUrl = `https://akera-logistics.herokuapp.com/api/v1/parcels`;
+  const pendingPackageUrl = `https://akera-logistics.herokuapp.com/api/v1/parcels/${'In transit'}`;
 
   const { data, fetchError, isLoading } = useFetchGet(url);
   useEffect(() => {

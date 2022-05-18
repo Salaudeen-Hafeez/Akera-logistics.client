@@ -15,7 +15,6 @@ const Login = () => {
   const { login } = context;
 
   const userUrl = 'https://akera-logistics.herokuapp.com/api/v1/login';
-  const adminUrl = 'https://akera-logistics.herokuapp.com/api/v1/admins/login';
 
   const { data, fetchError, isLoading } = useFetchPost(url, values);
   useEffect(() => {
@@ -43,11 +42,7 @@ const Login = () => {
     const errors = validateForm(values);
     setError(errors);
     if (Object.keys(errors).length === 0) {
-      if (!values.email.includes('@sendit.com')) {
-        setUrl(userUrl);
-      } else {
-        setUrl(adminUrl);
-      }
+      setUrl(userUrl);
     }
   };
 
